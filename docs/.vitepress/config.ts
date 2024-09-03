@@ -1,4 +1,4 @@
-const base = "/codify-api/"
+const base = "/codify-document/"
 export default {
   base,
   lang: 'en-US',
@@ -19,8 +19,8 @@ export default {
       {
         text: 'Language',
         items: [
-          { text: 'en', link: 'http://doc.codify-api.com' },
-          { text: 'zh', link: 'http://zh-doc.codify-api.com' },
+          { text: 'en', link: 'https://uetop.github.io/codify-document/' },
+          { text: 'zh', link: 'https://uetop.github.io/codify-document-zh/' },
         ],
       },
 

@@ -1,4 +1,6 @@
 # Changelog
+## v1.0.13
+- Added: Support for preset framework types [`framework_type`](./guide/feature-setting.md#framework_type)
 
 ## v1.0.12
 - Added: icon parsers, [`icon`](./guide/component-parsers.html#icon-parsers)

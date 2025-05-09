@@ -97,6 +97,17 @@ Taking common frontend components as an example, some content is written in tags
 ```
 This is clearly not the expected behavior, so we need to ignore this node. Then, we can use component parsing to write its text content into the tag. For more details, please refer to [Component parsers](/guide/component-parsers).
 
+## skip_prefixes
+
+- Type: `string | array`
+
+Skip the parent node and directly parse the content of the child nodes.
+
+```json
+"skip_prefixes": ["#default"],
+
+```
+
 ## block_component
 
 - Type: `string | array` 

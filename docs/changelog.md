@@ -1,6 +1,10 @@
 # Changelog
+
+## v1.0.14
+- Added: Skip the container and directly parse the child nodes. [`skip_prefixes`](./guide/feature-setting.md#skip_prefixes)
+
 ## v1.0.13
-- Added: Support for preset framework types [`framework_type`](./guide/feature-setting.md#framework_type)
+- Added: Support for preset framework types [`framework_type`](./guide/feature-setting.md#framework-type)
 
 ## v1.0.12
 - Added: icon parsers, [`icon`](./guide/component-parsers.html#icon-parsers)

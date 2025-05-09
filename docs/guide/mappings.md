@@ -435,7 +435,7 @@ The letter-spacing property can be mapped to the letter spacing style in the des
 
 - key: `letter spacing value`
 
-```json {8}
+```json
 "letter-spacing": {
   "0": "normal",
   "-5%": "tighter",

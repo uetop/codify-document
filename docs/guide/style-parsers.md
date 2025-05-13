@@ -690,3 +690,36 @@ Render `position:`
   "mappings": {}
 }
 ```
+
+## grid
+
+Rendering `display: grid` and related grid properties.
+
+- For parsing the new container - `Grid` in Figma. This property is fully consistent with the Grid features in CSS, allowing us to completely convert designs with Grid layouts into code.
+
+```json{5-12}
+"grid": {
+  "filter": "",
+  "classAttr": "class",
+  "styleAttr": "style",
+  "classPrefix": {
+    "columns": "grid-cols-",
+    "rows": "grid-rows-",
+    "column-span": "col-span-",
+    "row-span": "row-span-",
+    "rowStart": "row-start-",
+    "columnStart": "column-start-"
+  },
+  "getCssVar": false,
+  "getArbitraryVar": true, // If you want to use the tailwind style, remember to set it to true
+  "mappings": {}
+}
+```
+> The `classPrefix` here can set style name prefixes for multiple grid properties simultaneously.
+
+### Output Case
+```html
+<div class="grid grid-cols-3 grid-rows-4">
+  <div class="col-span-2 row-start-3"></div>
+</div>
+```

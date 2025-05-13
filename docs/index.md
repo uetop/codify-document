@@ -26,7 +26,7 @@ features:
     title: High quality
     details: Plug-in configuration allows you to flexibly customize code generation rules.
   - icon: 🤝
-    title: Can collaborate
+    title: Collaborative
     details: The code generation configuration you create can be shared with team members.
 ---
 

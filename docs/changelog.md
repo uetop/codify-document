@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.15
+- Added: New [`Grid`](./guide/style-parsers.html#grid) parsing to support Figma's Grid layout. 
+
 ## v1.0.14
 - Added: Skip the container and directly parse the child nodes. [`skip_prefixes`](./guide/feature-setting.md#skip_prefixes)
 

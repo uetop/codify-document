@@ -634,10 +634,26 @@ The position property can map the `Constraints` style in Figma.
 
 ```json
 "position": {
-  "fixed": "fixed",
-  "relative": "relative",
-  "absolute": "absolute",
-  "sticky": "sticky"
+  "position-type": {
+    "fixed": "fixed",
+    "relative": "relative",
+    "absolute": "absolute",
+    "sticky": "sticky"
+  },
+  "placement": {
+    "top": {
+      "0": "0"
+    },
+    "bottom": {
+      "0": "0"
+    },
+    "left": {
+      "0": "0"
+    },
+    "right": {
+      "0": "0"
+    }
+  }
 }
 ```
 The position property can also determine the values of top, right, bottom, and left based on the selection made in your design draft. Please refer to the [Style parsers](/guide/style-parsers#position) section for more information.

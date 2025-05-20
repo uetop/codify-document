@@ -678,18 +678,24 @@ Render `position:`
 - If the parser does not detect the "Auto Layout" property of the layer, it will output the `position: absolute` property.
 - If your "Auto Layout" node contains "absolute position" information, it will output the position: absolute property. It will also output the `left:`, `top:`, `right:`, and `bottom:` properties based on the "Constraints" directions you have set.
 
-```json
+```json {6-11}
 "position": {
   "nodeName": "",
   "filter": "",
   "classAttr": "class",
   "styleAttr": "style",
-  "classPrefix": "",
-  "stylePrefix": "position",
+  "classPrefix": {
+    "left": "left-",
+    "right": "right-",
+    "top": "top-",
+    "bottom": "bottom-"
+  },
   "getCssVar": false,
+  "getArbitraryVar": true,
   "mappings": {}
 }
 ```
+> `classPrefix` Currently you can set the style name prefixes for `left`, `right`, `top`, and `bottom` respectively.
 
 ## grid
 
@@ -715,7 +721,7 @@ Rendering `display: grid` and related grid properties.
   "mappings": {}
 }
 ```
-> The `classPrefix` here can set style name prefixes for multiple grid properties simultaneously.
+> `classPrefix` can set the style name prefix for `grid` related properties respectively.
 
 ### Output Case
 ```html

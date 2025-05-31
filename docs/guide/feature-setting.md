@@ -192,3 +192,22 @@ You can predefine the type of front-end framework for your current configuration
 ```
 
 The supported framework types are: `react`, `vue`, `angular`, `html`, `json`。
+
+
+## div_name
+
+- Type: `string`
+
+You can rename the 'div' tag, such as' view '`
+
+```json
+{
+  "div_name": "view"
+}
+
+// before: 
+// <div>content</div>
+
+// after:
+// <view>content</view>
+```

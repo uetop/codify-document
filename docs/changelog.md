@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.16
+- Added: [`div_name`](./guide/feature-setting.md#div-name) feature setting to set the div tag to your preset
+
 ## v1.0.15
 - Added: New [`Grid`](./guide/style-parsers.html#grid) parsing to support Figma's Grid layout. 
 

@@ -270,7 +270,7 @@ The `align-items:` property for flex layouts.
 }
 ```
 
-## gap
+## gap <Badge type="tip" text="1.0.17" />
 
 The `gap:` property for flex layouts and grid layouts.
 
@@ -291,7 +291,44 @@ The `gap:` property for flex layouts and grid layouts.
 }
 ```
 
-The `classPrefix` [render option](/guide/render-options.html#classprefix) supports an object, so you can set different prefixes for each direction.
+::: warning 
+After version `1.0.17`, the `gap` property no longer supports outputting multiple properties such as `column-gap` and `row-gap`. Instead, use the new [`columnGap`](/guide/style-parsers.html#columngap) and [`rowGap`](/guide/style-parsers.html#rowgap) style parsers.
+:::
+
+## columnGap <Badge type="tip" text="1.0.17" />
+
+The `column-gap:` property for flex layouts and grid layouts.
+
+```json{6,7}
+"columnGap": {
+  "nodeName": "",
+  "filter": "0",
+  "classAttr": "class",
+  "styleAttr": "style",
+  "classPrefix": "gap-x-",
+  "stylePrefix": "column-gap",
+  "getCssVar": false,
+  "mappings": {}
+}
+```
+
+## rowGap <Badge type="tip" text="1.0.17" />
+
+The `row-gap:` property for flex layouts and grid layouts.
+
+```json{6,7}
+"rowGap": {
+  "nodeName": "",
+  "filter": "0",
+  "classAttr": "class",
+  "styleAttr": "style",
+  "classPrefix": "gap-y-",
+  "stylePrefix": "row-gap",
+  "getCssVar": false,
+  "mappings": {}
+}
+```
+
 
 ## padding
 

@@ -153,7 +153,7 @@ When rendering layer styles, the parser will output the styles to the specified 
 
 ## classPrefix
 
-- Type: `string`
+- Type: `string` | `object`
 
 Prefixes can be added to style mappings by using prefix names. This functionality is useful in certain scenarios. Please continue reading the example below:
 

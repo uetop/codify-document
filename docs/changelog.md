@@ -1,7 +1,13 @@
 # Changelog
 
+## v1.0.17
+- Added: [`columnGap`](/guide/style-parsers.html#columngap) and [`rowGap`](/guide/style-parsers.html#rowgap) style parsers
+- Change: the [`gap`](/guide/style-parsers.html#gap) property no longer supports parsing styles for `column-gap` and `row-gap`
+
+
+
 ## v1.0.16
-- Added: [`div_name`](./guide/feature-setting.md#div-name) feature setting to set the div tag to your preset
+- Added: [`auto_layout_tag`](./guide/feature-setting.md#auto-layout-tag) feature setting to set the div tag to your preset
 
 ## v1.0.15
 - Added: New [`Grid`](./guide/style-parsers.html#grid) parsing to support Figma's Grid layout. 

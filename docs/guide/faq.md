@@ -14,7 +14,7 @@ The Codify backend only records the account information and configuration data o
 
 ## Do I need to pay for it?
 
-For the subscription version, it includes a comprehensive design system, a complete component library, code generation plugins, and a configuration management backend that supports team collaboration. Additionally, to cover server and bandwidth costs, we offer a very low price of $6.5/month for annual subscribers. This helps support ongoing improvements, and we greatly appreciate it.
+For the subscription version, it includes a comprehensive design system, a complete component library, code generation plugins, and a configuration management backend that supports team collaboration. Additionally, to cover server and bandwidth costs, we offer a very low price of $6.5/monthfor annual subscribers  (There are usually promotions, please refer to the payment page) . This helps support ongoing improvements, and we greatly appreciate it.
 
 Codify also offers a free plan, allowing you to generate HTML and CSS code. If this meets your requirements, you can use it completely free of charge.
 

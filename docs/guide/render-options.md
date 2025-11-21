@@ -33,7 +33,7 @@ Starting from the currently selected node, find the node with the name `{nodeNam
 
 ```json
 "text": {
-  "nodeName": "_title" // Here, _title refers to the layer name of the figma
+  "nodeName": "_title" // Here, _title refers to the layer name of the figma canvas
 }
 ```
 

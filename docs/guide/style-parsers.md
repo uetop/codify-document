@@ -6,7 +6,7 @@ The parser can convert layer descriptions into corresponding `HTML` and `CSS` co
 
 ## Feature
 
-The value can be either `class` or `style`. If your (Option) is mapped to a specific style that corresponds to a class name, it will automatically write the class name into the classAttr attribute. Here's an example:
+The value can be either `class` or `style`. If your (Render Option) is mapped to a specific style that corresponds to a class name, it will automatically write the class name into the classAttr attribute. Here's an example:
 
 ```json{16-19}
 // Assuming the target layer's fill is a white color #fff
@@ -641,6 +641,28 @@ Render `text-align:`
   "mappings": {}
 }
 ```
+
+## textTruncate
+
+Parse text truncation properties.
+
+```json
+"textTruncate": {
+  "nodeName": "",
+  "filter": "",
+  "classAttr": "class",
+  "styleAttr": "style",
+  "getCssVar": false,
+  "getArbitraryVar": false,
+  // You can also map it to an existing class name in your project
+  "mappings": {
+    "1": "line-clamp-1",
+    "2": "line-clamp-2",
+    "3": "line-clamp-3",
+  }
+}
+```
+>  textTruncate will automatically set the [line-clamp](https://developer.mozilla.org/zh-CN/docs/Web/CSS/line-clamp) style based on the truncation line count in the design. Please pay attention to the compatibility of this property across different browsers.
 
 ## image
 

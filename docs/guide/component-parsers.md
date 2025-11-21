@@ -2,7 +2,7 @@
 
 Codify can map design components to frontend components. This means you can easily generate real, interactive frontend code.
 
-### How to use
+## How to use
 
 We recommend that you:
 
@@ -41,31 +41,6 @@ Codify will mark layer names wrapped in `<>` angle brackets as frontend componen
 <el-button></el-button>
 ```
 However, it doesn't output any content or attributes. In this case, you need to use [Render Options](/guide/render-options) to add the rendering content for the component.
-
-## Render Options
-
-With [Render Options](/guide/render-options), you can customize the parsing method for the component.
-
-<video controls autoplay loop muted src="/images/set-components.mp4" title="set components" style="border-radius: 12px;"></video>
-
-```json
-"button": {
-  "props": {},
-  "text": {
-    "params": {
-      "nodeName": "text"
-    }
-  },
-  "type": {
-    "params": {
-      "valueFrom": "background"
-    }
-  },
-  "disabled": {},
-  "flex": {}
-},
-```
-Other component configurations follow a similar approach to the `button` configuration. Codify provides a set of demo components and configurations that you can download and explore in the [Community Resources](https://www.figma.com/community/file/1362976228899599536/codify-uikit).
 
 
 ## Parsing Multiple Layers with a Style Parser
@@ -114,6 +89,49 @@ The correct approach is to use an array
 ```
 You can also find similar usage examples in the configuration below.
 
+
+
+## Render Options
+
+With [Render Options](/guide/render-options), you can customize the parsing method for the component.
+
+<video controls autoplay loop muted src="/images/set-components.mp4" title="set components" style="border-radius: 12px;"></video>
+
+```json
+"button": {
+  "props": {},
+  "text": {
+    "params": {
+      "nodeName": "text"
+    }
+  },
+  "type": {
+    "params": {
+      "valueFrom": "background"
+    }
+  },
+  "disabled": {},
+  "flex": {}
+},
+```
+Other component configurations follow a similar approach to the `button` configuration. Codify provides a set of demo components and configurations that you can download and explore in the [Community Resources](https://www.figma.com/community/file/1362976228899599536/codify-uikit).
+
+## Rename Component Name
+You can set the `name` option for a component to override the component's name.
+```json
+"button": {
+  ...
+}
+// Default rendering:
+<button>...</button>
+
+// Add name option
+"button": {
+  "name": "my-button"
+}
+// Renders as:
+<my-button>...</my-button>
+```
 
 ## Props parsers
 
@@ -164,25 +182,6 @@ By default, props is configured with three types of filtered properties. If your
 ```
 If you have set the [ignore_prefixes](/guide/feature-setting#ignore-prefixes) in the feature.json, the system will prioritize filtering the node names specified in the configuration.
 
-## Type parsers
-
-The `type` attribute is used to retrieve the type of the component. When using the type parser, Codify will output the corresponding type based on the [status_color](/guide/feature-setting#status-color) color you have set. For example:
-
-```json{4}
-"type": {
-  "nodeName": "",
-  "valueFrom": "background",
-  "attrName": "type",
-  "filter": "default"
-}
-```
-If you select the `primary` style, it will output `<Button type="primary">Primary Button</Button>`. Please refer to the [Render options](/guide/render-options) for other attributes.
-
-If you want to write the property to a different name, you can change the value of the attrName property. For example, `"attrName": "color"`, in this case it will output `<Button color="primary">Primary Button</Button>`.
-
-:::tip
-The `traverse` `attrs` and `type` parsers are specifically designed for component parsers. You will frequently encounter them while reading the [Component parsers](/guide/component-parsers) documentation.
-:::
 
 ## Multipurpose attr parser
 
@@ -280,7 +279,189 @@ Based on the Corner radius, obtain a pill-shaped button.
 
 ```
 
-## Icon parsers
+## Icon Parser
+
+Use the `icon` parser to parse icon components. You can get the specified icon layer name by setting [nodeName](/guide/render-options.html#nodename). For example, we set the icon property for the `Button` component:
+
+```jsx
+"Button": {
+  "props": {},
+  "text": {
+    "nodeName": "_text"
+  },
+  "flex": {},
+  "icon": {
+    "attrName": "icon",
+    "nodeName": {
+      "name": "icon",
+      "deepFind": true
+    }
+  }
+}
+
+// You can get the following result:
+<el-button type="primary" :icon="SearchOutlined">
+  Search
+</el-button>
+
+// React components might look like this:
+<Button type="primary" icon={<SearchOutlined />}>
+  Search
+</Button>
+```
+
+### Using getComponentName to Render Icons as Specified Values
+
+- Type: `boolean` | `string`
+- Default: `false`
+
+`getComponentName` can be set to render as `variable`, `object`, or `string`. For example, we parse a React icon component:
+
+```jsx
+"Icon": {
+  "icon": {
+    "nodeName": {
+      "name": "icons",
+      "deepFind": true
+    },
+    "attrName": "value",
+    "getComponentName": false // [!code highlight]
+  }
+}
+// Renders as object:
+<Icon value={<SmileOutlined />} />
+
+// Renders as variable:
+"getComponentName": true // [!code highlight]
+<Icon value={SmileOutlined} />
+
+// Renders as string:
+"getComponentName": "string" // [!code highlight]
+<Icon value="SmileOutlined"} />
+
+
+```
+
+### Using childComponent to Render Icons as Child Elements
+
+By default, the `icon` parser will render icons as component attributes. However, you can also set `childComponent` to render the icon as a separate child element. For example:
+
+```js {3}
+// For example, we have a component named Button
+// And, if your icon name is @SearchOutlined
+"Button": {
+  // ... 
+  // Parse icon component
+  "icon": {
+    "nodeName": {
+      "name": "icon",
+      "deepFind": true
+    },
+    "attrName": "#icon", // Set the icon component's attribute name to #icon
+    "childComponent": {
+      "parentType": "slot",  // Set the icon component's parent element type to slot
+      "parentTag": "template" // Set the icon component's parent element tag to template
+    }
+  }
+}
+
+// You can get the following result:
+<Button>
+  <template #icon>
+    <SearchOutlined />
+  </template>
+</Button>
+
+```
+
+## Parsing Common Icon Components
+If you want to parse icons in bulk without configuring component parsing for each icon individually, you can set an [`icon_prefix`](/guide/feature-setting.html#icon-prefix) rule for icon layer names in your design file, and they will be automatically parsed as icon components, resulting in:
+
+```jsx
+// Layer name:
+// @SearchOutlined
+
+<SearchOutlined />
+```
+
+If you need common icon components to output style properties, you can configure as follows:
+
+```jsx
+// 1. Open the component-parsers configuration interface
+// 2. Add to the file:
+
+"@icons": {
+  "width": {
+    "filter": "",
+    "classPrefix": "",
+    "stylePrefix": "font-size",
+    "getCssVar": true
+  },
+  "background": {
+    "classPrefix": "",
+    "stylePrefix": "color",
+    "nodeName": {
+      "name": "Vector",
+      "deepFind": true
+    }
+  },
+},
+// Other component parsing configurations ... 
+
+// You will get the following result:
+<SearchOutlined fontSize="24px"  color="#000"/>
+```
+
+## Common Text Component
+Use specific tags for your text content, such as `<text>name</text>`, which effectively avoids the tedious operation of frequently calling "text components".
+
+```json
+// 1. Open the component-parsers configuration interface
+// 2. Add to the file:
+ "@text": {
+    "name": "abc-text", // Use rename property
+    "text": {},
+    "width": {},
+    "height": {},
+    "minWidth": {},
+    "maxWidth": {},
+    "minHeight": {},
+    "maxHeight": {},
+    "display": {},
+    "flex": {},
+    "justifyContent": {},
+    "alignItems": {},
+    "color": {},
+    "fontSize": {},
+    "fontFamily": {},
+    "textAlign": {
+      "filter": [
+        "left",
+        "text-left"
+      ]
+    },
+    "fontWeight": {
+      "filter": [
+        "400"
+      ]
+    },
+    "lineHeight": {},
+    "letterSpacing": {},
+    "background": {},
+    "borderStyle": {},
+    "borderColor": {},
+    "borderWidth": {},
+    "opacity": {},
+    "boxShadow": {},
+    "position": {}
+  },
+// Other component parsing configurations ... 
+
+// You will get the following result:
+<abc-text>Text content</abc-text>
+```
+
+## #slot
 
 `icon` is the icon component used for parsing. You can get the specified icon by setting the [nodeName](/guide/render-options.html#nodename). For example, we set the icon property for the `Button` component:
 

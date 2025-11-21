@@ -10,9 +10,9 @@ Codify is a figma plugin, that allows you to convert design files into various c
 
 
 ## Where is it used?
-In addition to Figma, Codify will also gradually support other mainstream prototyping platforms such as MasterGo, JS Design, and Pixso.
+In addition to Figma and MasterGo, Codify will gradually support mainstream prototyping design platforms.
 
-![platforms](/images/logos.svg)
+
 
 ::: tip 
 To register a Codify account, you can enjoy its features and services across multiple platforms. This means that with just one account, you can access Codify on different platforms.

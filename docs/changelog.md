@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.18
+- Added: Codify AI now supports connecting your own model API. You can configure it in the `My Team` / `AI Driver` tab on [Codify.fun](https://codify.fun). 
+
 ## v1.0.17
 - Added: [`columnGap`](/guide/style-parsers.html#columngap) and [`rowGap`](/guide/style-parsers.html#rowgap) style parsers
 - Change: the [`gap`](/guide/style-parsers.html#gap) property no longer supports parsing styles for `column-gap` and `row-gap`

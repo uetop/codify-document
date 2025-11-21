@@ -28,15 +28,15 @@ _From ChatGPT_
 
 > Currently, there is no better approach to generating semantic class names. Moreover, it is not desirable to have designers manually write class names for each element in every project. That's why most Design-to-Code tools choose to use atomic-level CSS classes to build interfaces. If new class names were generated every time, it would significantly impact code organization and project maintenance.
 
-Therefore, in version 1.0.0, Codify refactored its style parsing engine. The plugin now checks whether the styles in the design file are mapped to pre-defined class names. We are also exploring additional ways to optimize style generation.
+Therefore, in version 1.0.0, Codify refactored its style parsing engine. The plugin now checks whether the styles in the design file are mapped to pre-defined class names. We are also exploring additional ways to optimize style generation. 
 :::
 
-:::tip
-When reading this file, it is recommended that you open [mappings.json](https://codify.fun) and try it while reading.
+:::tip 
+When reading this file, it is recommended that you open [mappings.json](https://codify.fun) and try it while reading. 
 :::
-
 
 ## Json format description
+
 Based on the document below, you will quickly realize that it is actually a standard CSS property. We need to write a mapping program according to the format provided by Codify in order to parse the styles from design drafts and convert them into CSS properties. So, please open the [mappings.json](https://codify.fun) file while reading and try it out.
 
 ![alt text](/images/mapping-demo.png)
@@ -46,8 +46,8 @@ The `key` in the JSON above represents the properties output by Figma, while the
 Codify has already mapped the style properties provided by prototyping design tools like Figma to CSS properties, making them more readable. Therefore, you do not need to understand the Figma API. You just need to follow the format provided in this document to write your mappings. You can even directly paste them into the [mappings.json](https://codify.fun/) and start using it.
 
 ## Tips
-The class names can be unified with a prefix through the [renderer options](/guide/render-options.html#classprefix) in the style parsing engine. If a prefix is set in the style parsing engine, the current style mapping does not need to include the prefix. example:
 
+The class names can be unified with a prefix through the [renderer options](/guide/render-options.html#classprefix) in the style parsing engine. If a prefix is set in the style parsing engine, the current style mapping does not need to include the prefix. example:
 
 ```json {7,15,22}
 // style-parsers
@@ -74,8 +74,8 @@ The class names can be unified with a prefix through the [renderer options](/gui
  justify-start
 
 ```
-The following example uses `Tailwind` as the basis for configuring style mappings. However, it does not mean that you are limited to using `Tailwind` utility classes.
-If you want to configure a Tailwind utility class, you can simply copy the code below and add it to the [mappings.json](https://codify.fun/) file.
+
+The following example uses `Tailwind` as the basis for configuring style mappings. However, it does not mean that you are limited to using `Tailwind` utility classes. If you want to configure a Tailwind utility class, you can simply copy the code below and add it to the [mappings.json](https://codify.fun/) file.
 
 ## width
 
@@ -88,6 +88,7 @@ If you want to configure a Tailwind utility class, you can simply copy the code 
   //.....
 }
 ```
+
 ## min-width
 
 - key: `min-width value`
@@ -99,6 +100,7 @@ If you want to configure a Tailwind utility class, you can simply copy the code 
   //.....
 }
 ```
+
 ## max-width
 
 - key: `max-width value`
@@ -134,6 +136,7 @@ If you want to configure a Tailwind utility class, you can simply copy the code 
   //.....
 }
 ```
+
 ## max-height
 
 - key: `max-height value`
@@ -160,20 +163,22 @@ Currently, only the conversion of `Auto Layout` from design drafts to `Flex layo
 
 ## flex
 
-- key: `none | auto | fill-x | fill-y | wrap`
+- key: `none | hug-x | hug-y | fill-x | fill-y | wrap`
 
-| Figma Attributes                | Codify Attributes |
-| ------------------------- | ----------- |
-| Fixed width               | none        |
-| Hub contents              | auto        |
-| Horizontal Fill container | fill-x      |
-| Vertical Fill container   | fill-y      |
-| Wrap                      | wrap        |
+| Canvas Attributes         | Codify Attributes |
+| ------------------------- | ----------------- |
+| Fixed width               | none              |
+| Horizontal Hug container  | hug-x             |
+| Vertical Hug container    | hug-y             |
+| Horizontal Fill container | fill-x            |
+| Vertical Fill container   | fill-y            |
+| Wrap                      | wrap              |
 
 ```json
 "flex": {
   "none": "flex-none",
-  "auto": "flex-auto",
+  "hug-x": "flex-auto",
+  "hug-y": "flex-auto",
   "fill-x": "flex-1",
   "fill-y": "self-stretch",
   "wrap": "flex-wrap"
@@ -184,12 +189,12 @@ Currently, only the conversion of `Auto Layout` from design drafts to `Flex layo
 
 - key: `flex-start | center | flex-end | space-between`
 
-| Figma Attributes       | Codify Attributes   |
-| ---------------- | ------------- |
-| Align top left   | flex-start    |
-| Align top center | center        |
-| Align top right  | flex-end      |
-| Auto             | space-between |
+| Canvas Attributes | Codify Attributes |
+| ----------------- | ----------------- |
+| Align top left    | flex-start        |
+| Align top center  | center            |
+| Align top right   | flex-end          |
+| Auto              | space-between     |
 
 ```json
 "justify-content": {
@@ -204,11 +209,11 @@ Currently, only the conversion of `Auto Layout` from design drafts to `Flex layo
 
 - key: `flex-start | center | flex-end`
 
-| Figma Attributes        | Codify Attributes |
-| ----------------- | ----------- |
-| Align top left    | flex-start  |
-| Align left        | center      |
-| Align bottom left | flex-end    |
+| Canvas Attributes | Codify Attributes |
+| ----------------- | ----------------- |
+| Align top left    | flex-start        |
+| Align left        | center            |
+| Align bottom left | flex-end          |
 
 ```json
 "align-items": {
@@ -218,18 +223,18 @@ Currently, only the conversion of `Auto Layout` from design drafts to `Flex layo
 }
 ```
 
-:::tip
-If your design draft uses the `Align center` attributes, the parsing tool will automatically add the mapped class names for `justify-content` and `align-items`. If  value of `center`. it will generate `class="justify-center items-center"`.
+:::tip 
+If your design draft uses the `Align center` attributes, the parsing tool will automatically add the mapped class names for `justify-content` and `align-items`. If value of `center`. it will generate `class="justify-center items-center"`. 
 :::
 
 ## flex-direction
 
 - key: `row | column`
 
-| Figma Attributes        | Codify Attributes |
-| ----------------- | ----------- |
-| Vertical layout   | row         |
-| Horizontal layout | column      |
+| Canvas Attributes | Codify Attributes |
+| ----------------- | ----------------- |
+| Vertical layout   | row               |
+| Horizontal layout | column            |
 
 ```json
 "flex-direction": {
@@ -245,11 +250,11 @@ The mapping of gap has two attributes: `direction` and `size`
 - direction key: `gap | column-gap | row-gap`
 - size key: `value`
 
-| Figma Attributes     | Codify Attributes |
-| -------------- | ----------- |
-| gap            | gap         |
-| Vertical gap   | row-gap     |
-| Horizontal gap | column-gap  |
+| Canvas Attributes | Codify Attributes |
+| ----------------- | ----------------- |
+| gap               | gap               |
+| Vertical gap      | row-gap           |
+| Horizontal gap    | column-gap        |
 
 ```json
 "gap": {
@@ -272,6 +277,7 @@ The mapping of gap has two attributes: `direction` and `size`
   // ......
 }
 ```
+
 This will output style names like `gap-0` `gap-x-0` `gap-y-0`, and so on, based on the prefix set in the `gap` style parsing engine.
 
 ## font-family
@@ -284,13 +290,14 @@ The display of font styles depends on whether the user's device has the correspo
 
 ```scss
 @font-face {
-  font-family: "poppins";
-  src: url("yourPath/poppins.ttc");
+  font-family: 'poppins';
+  src: url('yourPath/poppins.ttc');
 }
 .font-poppins {
-  font-family: "poppins";
+  font-family: 'poppins';
 }
 ```
+
 #### mappings.json
 
 ```json
@@ -301,8 +308,8 @@ The display of font styles depends on whether the user's device has the correspo
 
 If your text layer uses a font from the font mapping table, it will output a style like `class="font-poppins"`.
 
-:::tip
-The default system font-family do not need to be defined here. Additionally, you can also set filters for system default fonts in the [font-family parsing](/guide/style-parsers#fontfamily) This is because in most cases, we don't need to declare the `font-family` style for every text node.
+:::
+tip The default system font-family do not need to be defined here. Additionally, you can also set filters for system default fonts in the [font-family parsing](/guide/style-parsers#fontfamily) This is because in most cases, we don't need to declare the `font-family` style for every text node. 
 :::
 
 ## color
@@ -331,17 +338,17 @@ The advantage of this approach is that even if the styles in the design drafts a
 
 ```json
 "color": {
-  "neutral-100": "regular",
-  "neutral-200": "secondary",
-  "neutral-300": "light",
-  "neutral-400": "lightest"
+  "neutral-100": "text-regular",
+  "neutral-200": "text-secondary",
+  "neutral-300": "text-light",
+  "neutral-400": "text-lightest"
 }
 ```
 
 While using such naming conventions in a color palette may be feasible, it does not align with the principles of semantic naming in frontend development. Therefore, you can choose to map them to corresponding semantic class names.
 
-::: warning
-So, in the configuration mentioned in this document, all color-related styles are not following the default naming format provided by Tailwind. Additionally, Tailwind has proposed naming modifications, and you can refer to the official [Tailwind documentation](https://tailwindcss.com/docs/customizing-colors#naming-your-colors).
+::: warning 
+So, in the configuration mentioned in this document, all color-related styles are not following the default naming format provided by Tailwind. Additionally, Tailwind has proposed naming modifications, and you can refer to the official [Tailwind documentation](https://tailwindcss.com/docs/customizing-colors#naming-your-colors). 
 :::
 
 ## heading
@@ -413,12 +420,12 @@ Map class names based on font text align.
 
 - key: `left | center | right | justify`
 
-| Figma Attributes           | Codify Attributes |
-| -------------------- | ----------- |
-| Text align left      | left        |
-| Text align center    | center      |
-| Text align right     | right       |
-| Text align justified | justify     |
+| Canvas Attributes    | Codify Attributes |
+| -------------------- | ----------------- |
+| Text align left      | left              |
+| Text align center    | center            |
+| Text align right     | right             |
+| Text align justified | justify           |
 
 ```json
 "text-align": {
@@ -492,6 +499,7 @@ The padding corresponds to the padding style in Figma. you can set the prefix fo
   // ......
 }
 ```
+
 If you set the `padding top` of a layer node to 16px, it will output `pt-4`. Similarly, if you set the `padding bottom` of a layer node to 16px, it will output `py-4`.
 
 ## background
@@ -513,9 +521,11 @@ The background property corresponds to the `Fill` style in Figma. Similar to the
   "bg-transparent": "transparent"
 }
 ```
+
 We are well aware that text styles are defined using the `color:`, while background colors are defined using the `background-color:`. These two properties are not interchangeable. If you fill a text style in Figma for a `Frame` or `Shape` node, it will output `background-color: var(--text-primary)`. Therefore, you should prepare `Css Variable` in advance for your frontend project. The Codify plugin can exporting Figma styles as `Css Variable` with a single click.
 
 ## border-color
+
 - key: `Class name`
 
 ```json
@@ -529,6 +539,7 @@ We are well aware that text styles are defined using the `color:`, while backgro
 ```
 
 ## border-width
+
 - key: `border width value`
 
 ```json
@@ -542,6 +553,7 @@ We are well aware that text styles are defined using the `color:`, while backgro
 ```
 
 ## border-style
+
 - key: `solid | dashed | dotted`
 
 ```json
@@ -656,6 +668,7 @@ The position property can map the `Constraints` style in Figma.
   }
 }
 ```
+
 The position property can also determine the values of top, right, bottom, and left based on the selection made in your design draft. Please refer to the [Style parsers](/guide/style-parsers#position) section for more information.
 
 ## overflow

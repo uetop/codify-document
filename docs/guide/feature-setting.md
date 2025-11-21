@@ -1,51 +1,204 @@
-# Feature setting
+# Feature Settings
 
-Before starting to generate code, Codify parses the settings in the feature files to generate code that aligns with the user's expectations.
+Before Codify starts generating code, it first parses the settings in the feature configuration to generate code that meets user expectations.
 
-Here's a complete example:
+The following is a complete example:
 
 ```json
 {
   "playground_url": "http://your.playground_url.com",
+  "framework_type": "vue",
+  "enable_ignore_node": true,
+  "enable_skip_node": true,
+  "enable_ignore_style": true,
+  "enable_ignore_name": true,
+  "enable_slot_render": true,
+  "enable_token_render": true,
+  "enable_export_setting_to_image": false,
+  "enable_instance_realname": true,
+  "resource_path": {
+    "svg": "./svg/",
+    "image": "./image/"
+  },
   "component_prefix": "el-",
+  "auto_layout_tag": "div",
   "slot_prefix": "#",
-  "ignore_prefixes": ["_", "$config"],
-  "block_component": ["button", "input"],
-  "ignore_component": ["step", "tab-pane", "timeline-item", "list-item"],
-  "status_color": ["primary", "warning", "success", "danger", "info"]
+  "ignore_prefixes": ["_"],
+  "skip_prefixes": ["#skip"],
+  "icon_prefix": [
+    "@"
+  ],
+  "ignore_component": [],
+  "unit_conversion": {
+    "unit_type": "px",
+    "root_font_size": "14",
+    "dpi": "96"
+  },
+  "color_format": "hex",
+  "svg_optimizing": {
+    "remove_useless_defs": true,
+    "remove_unneeded_groups": true
+  }
 }
 ```
 
-In this section, each property will be introduced one by one, along with its purpose and how to configure it.
+This section will introduce the functions and configuration methods of these properties one by one.
 
 ## playground_url
 
 - Type: `string`
 
-The preview window is used to showcase and run the frontend code of your project. You will need to develop this page on your own. We provide detailed tutorials and code examples for your reference. Please refer to the [Playground setting](/guide/playground-setting) section.
+The preview window is used to display and run the frontend code of your project. You need to develop this page yourself. We provide detailed tutorials and code examples. Please refer to [Playground Settings](/guide/playground-setting).
 
 ```json
 "playground_url": "http://your.playground_url.com",
 ```
 
-## file_url
 
-- Type: `string`
+## enable_ignore_node
 
-The `file_url` property is used to set the link to the corresponding design file for the current configuration file. This allows team members to quickly navigate to the relevant file. In the Codify plugin, it serves as a convenient way to jump to the file. like:
+- Type: `boolean`
+- Default: `false`
+
+When you set the [Ignore Parsing](#) property for a layer, Codify will ignore that layer and its child layers. You can use this switch to enable or disable this rule.
+
 
 ```json
-"file_url": "https://www.figma.com/community/file/1362976228899599536"
+"enable_ignore_node": true,
 ```
+
+## enable_skip_node
+
+- Type: `boolean`
+- Default: `false`
+
+When you set the [Skip Parsing](#) property for a layer, Codify will skip it and parse its child layers. You can use this switch to enable or disable this rule.
+
+```json
+"enable_skip_node": true,
+```
+
+## enable_ignore_style
+
+- Type: `boolean`
+- Default: `false`
+
+When you set the [Ignore Style](#) property for a layer, Codify will ignore the styles of that layer. You can use this switch to enable or disable this rule.
+
+```json
+"enable_ignore_style": true,
+```
+
+## enable_ignore_name
+
+- Type: `boolean`
+- Default: `false`
+
+When you set the [Ignore Name](#) property for a layer, Codify will ignore parsing layers with that name as a prefix. You can use this switch to enable or disable this rule.
+
+```json
+"enable_ignore_name": true,
+```
+
+## enable_slot_render
+
+- Type: `boolean`
+- Default: `false`
+
+When you set the [Slot Render](#) property for a layer, Codify will render it as a slot when parsing that layer. You can use this switch to enable or disable this rule.
+
+```json
+"enable_slot_render": true,
+```
+
+## enable_token_render
+
+- Type: `boolean`
+- Default: `false`
+
+When you use [Variables](#) styles for a layer, Codify will render the layer's styles directly in the form of `css var` when parsing. You can use this switch to enable or disable this rule.
+
+
+```json
+// Style code syntax: bg-body, color: #f4f4f4
+"enable_token_render": true,
+// Output: <div style="background-color: var(--bg-body)"></div>
+
+"enable_token_render": false,
+// Output: <div style="background-color: #f4f4f4"></div>
+
+```
+
+## enable_export_setting_to_image
+
+- Type: `boolean`
+- Default: `false`
+
+When you enable this property, Codify will export layers with export settings as image files during the parsing process.
+
+```json
+"enable_export_setting_to_image": true,
+```
+
+## enable_instance_realname
+
+- Type: `boolean`
+- Default: `true`
+
+When you enable this property, Codify will be able to identify the real name of a component instance regardless of what name you change it to.
+
+```json
+"enable_instance_realname": true,
+```
+
+## resource_path <Badge type="warning" text="1.0.5" />
+
+- Type: `boolean` | `object`
+- Default: `false`
+- svg: `string`
+- image: `string`
+
+When you set paths for the `svg`, `image`, and `shape` properties, Codify will extract them as separate files during the parsing process.
+
+```json
+"resource_path": {
+  "svg": "svg/",
+  "image": "image/"
+},
+```
+Only when paths are set can the AI Generate feature be enabled. This helps save Token resources for AI models.
+
+::: details Why is this needed?
+**Verbose Path Data:**
+
+Path data is typically very long and dense, consisting of a large number of coordinate points and commands. It's unreadable "gibberish" to humans, but for models, every character, comma, and decimal point is a Token that needs to be processed.
+
+
+**Low Information Density:**
+
+From the perspective of "understanding code logic," a large segment of SVG path data carries very little effective information. It only describes specific pixel positions, not program logic, algorithms, or architecture.
+
+
+**Summary**
+
+Using `resource_path` to render resources as paths is essentially a form of information refinement. It helps AI focus on the core of the problem (code logic) while saving valuable Token resources (money and time) for yourself. This is an efficient and economical approach.
+:::
+
+We also recommend using the [Icon Parser](/guide/component-parsers.html#图标解析-icon) to render icons as components.
+
+
 
 ## component_prefix
 
 - Type: `string`
 
-Codify recognizes layer names wrapped in `<>` angle brackets as frontend components. If you need to add a prefix to the component name, you can configure this property.
+We can set aliases for components in [DSM]. This way, aliases will be used instead of component names when identifying components.
+
+Codify will also recognize layer names wrapped in `<>` angle brackets as frontend components. If you need to add a prefix to component names, you can set this property.
+
 
 ```json
-// Layer name: <button>
+// Layer name: <button> or alias: button
 "component_prefix": "el-",
 // Output: <el-button>
 ```
@@ -54,136 +207,120 @@ Codify recognizes layer names wrapped in `<>` angle brackets as frontend compone
 
 - Type: `string`
 
-Codify recognizes layer names starting with `#` as a `slot`. This attribute is particularly important for frontend projects using [Vue](https://vuejs.org/guide/components/slots#named-slots)
+If you set a container name with a `#` prefix, such as `#header`, it will be rendered as a [slot](/guide/component-parsers.html#插槽) tag. This property is particularly important for popular frontend framework projects.
+Of course, you can customize its prefix:
 
 ```json
 "slot_prefix": "#",
-// Layer name: #header
-// Output: <template #header>
+```
+### Vue
+```vue
+<template #header>
+  <div>content</div>
+</template>
+```
+### React
+```vue
+<component header={
+  <div>content</div>
+}>
 ```
 
-Below is an actual example:
+::: warning
+Note that Codify will not parse slot styles. If the slots in your design have layout styles, we recommend manually adjusting them to maintain visual consistency with frontend components.
+:::
 
-![slot](/images/slot-view.png)
+## icon_prefix
+
+- Type: `string | array`
+
+You can set a prefix for icon layers, so they will be parsed as icon components during parsing.
+
+```json
+"icon_prefix": [
+  "@"
+],
+
+// Layer name: @edit
+// Output: <edit />
+```
 
 ## ignore_prefixes
 
 - Type: `string | array`
 
-Ignore certain prefixes so that layers with specific prefixes are not recognized by Codify plugin by default.
+Ignore certain prefixes so that layers with specific prefixes are not recognized by Codify by default.
+
 
 ```json
-"ignore_prefixes": ["_", "$config"],
+"ignore_prefixes": ["_"],
 
-// _name  $config_name
+// _name
 ```
 
-If you name a layer as `_title`, it will prevent Codify's [traverse parser](/guide/style-parsers#遍历解析器-traverse) from parsing that layer. If your component properties also use the ignored prefix, they will be ignored by Codify as well.
+If you set a layer's property to [Ignore](), this will prevent Codify's [Traverse Parser](/guide/style-parsers#遍历解析器-traverse) from parsing this layer.
 
-> Note: `$config` is a reserved keyword in the Codify system. It is used as a layer prefix for [custom properties](/guide/custom-properties).
+You can also name a layer with a `_` prefix, such as `_title`, to achieve the same effect.
+
+If your component properties also use ignore prefixes, those properties will be ignored during parsing.
+
 
 ### Why ignore layers?
 
-Taking common frontend components as an example, some content is written in tags, for instance:
+Take common frontend components as an example. Some content is written on tags, for example:
 
 ```html
 <input value="please enter" type="text">
 <el-input placehoder="please enter">
 
-<!-- If the text node is not ignored, it may be parsed as: -->
+<!-- If the text node is not ignored, it might be parsed as -->
 <input value="" type="text">please enter</input>
 <el-input placehoder="">please enter</el-input>
 
 ```
-This is clearly not the expected behavior, so we need to ignore this node. Then, we can use component parsing to write its text content into the tag. For more details, please refer to [Component parsers](/guide/component-parsers).
+
+This is clearly not as expected, so we need to ignore this node. Then use component parsing to write its text content into the tag. For details, please refer to [Component Parsing](/guide/component-parsers)
+
 
 ## skip_prefixes
 
 - Type: `string | array`
 
-Skip the parent node and directly parse the content of the child nodes.
+We can set a skip parsing property for layers, so that during parsing, this layer will be skipped and the child node content will be parsed directly.
+
+You can also write the property in the layer name, such as `#skip`, to achieve the same effect.
 
 ```json
-"skip_prefixes": ["#default"],
+"skip_prefixes": ["#skip"],
 
+// Layer name: #skip_title
 ```
-
-## block_component
-
-- Type: `string | array` 
-
-eclare which components are block-level components using `block_component`. This way, when setting the `Fill container` for a component, you can add the block attribute to the current component. This will result in more standardized code.
-
-```html
-"block_component": ["button", "input"],
-
-<button type="primary" block>button</button>
-<input value="input" block />
-```
-
-<video width="100%" loop autoplay style="border-radius: 12px;"> 
-  <source src="/images/block.mp4" type="video/mp4"> 
-</video>
 
 ## ignore_component
 
 - Type: `string | array` 
 
-If you want to ignore certain components, you can add `ignore_component` to the configuration. It will not be parsed by Codify.
+If you want to ignore some components, you can add `ignore_component` to the configuration. They will not be parsed.
 
 ```json
 "ignore_component": ["step", "tab-pane", "timeline-item", "list-item"],
 ```
 
-In most cases, some components are composed of parent components and child components. Child components usually cannot function independently. Therefore, when the selected top-level node is a child component, you can use `ignore_component` to make Codify ignore them.
+Typically, some components consist of parent and child components. Child components usually cannot run independently. Therefore, when the first-level node you select is a child component, you can ignore them through `ignore_component`.
 
-## status_color
-
-- Type: `string | array`
-
-If your design system has status colors, you can identify them using `status_color`. This way, when selecting a certain color for certain components, their attributes will be correctly placed in their type properties instead of being placed in classes.
-
-```json
-"status_color": ["primary", "warning", "success", "danger", "info"]
-
-// Output:
-// <button type="primary">button</button>
-// Not:
-// <button class="primary">button</button>
-```
-
-Perhaps your status type name is not type, and you can define it in the [Component parsers](/guide/component-parsers).
-
-Here is an example:
-
-```json {5,15}
-// Material ui case
-{
-  "button": {
-    "type": {
-      "attrName": "color",
-    }
-  }
-}
-// <Button variant="contained" color="primary">Primary</Button>
-
-// Element plus or Ant design case
-{
-  "button": {
-    "type": {
-      "attrName": "type",
-    }
-  }
-}
-// <el-button type="primary">Primary</el-button>
-// <Button type="primary">Primary</Button>
-```
 
 ## framework_type
 
 - Type: `string`
+- Default: `html`
+- Options: `react` | `vue` | `vue2` | `angular` | `html` | `wxml` | `json`
 
-You can predefine the type of front-end framework for your current configuration, such as `react` or `vue`, so that the corresponding code will be generated by default in the plugin.
+You can preset the frontend framework type for your current configuration in advance, such as `react` or `vue`, so that the corresponding code will be generated by default during parsing.
+
+::: warning
+Note: If your design components use special syntax from frameworks like `vue` or `angular`, you need to set `framework_type` for your configuration in advance. Otherwise, Codify will parse them as `html` code by default.
+:::
+
 
 ```json
 {
@@ -191,23 +328,74 @@ You can predefine the type of front-end framework for your current configuration
 }
 ```
 
-The supported framework types are: `react`, `vue`, `angular`, `html`, `json`。
-
+Currently supported framework types: `react`, `vue`, `angular`, `html`, `wxml`, `json`.
 
 ## auto_layout_tag
 
 - Type: `string`
+- Default: `div`
 
-You can rename the `div` tag, such as `view`
+
+You can rename the `div` tag with auto layout, for example, to `Space`
 
 ```json
 {
-  "auto_layout_tag": "view"
+  "auto_layout_tag": "Space"
 }
 
-// before: 
+// Before:
 // <div>content</div>
 
-// after:
-// <view>content</view>
+// After:
+// <Space>content</Space>
+```
+
+## unit_conversion
+
+- Type: `object`
+- Default: `false`
+- unit_type: `px` | `rem` | `pt` | `mm` | `cm` | `rpx`
+- root_font_size: `number` | `string`
+- dpi: `number` | `string`
+
+Unit conversion. You can set conversion rules for some units, for example, converting `px` to `rem`.
+
+```json
+{
+  "unit_conversion": {
+    "unit_type": "px", // Unit type
+    "root_font_size": "14", // Root font size
+    "dpi": "96" // dpi
+  }
+}
+```
+
+## color_format
+
+- Type: `string`
+- Default: `false`
+- Options: `hex` | `rgb` | `rgba` | `hsl` | `oklch`
+
+Color format. You can set conversion rules for colors, for example, converting `hex` to `rgb`.
+
+```json
+{
+  "color_format": "rgb"
+}
+```
+
+## svg_optimizing
+
+- Type: `boolean` | `object`
+- Default: `false`
+
+Whether to enable SVG optimization. When enabled, SVG code will be compressed, which will slightly reduce code generation speed.
+
+```json
+{
+  "svg_optimizing": {
+    "remove_useless_defs": true,
+    "remove_unneeded_groups": true
+  }
+}
 ```

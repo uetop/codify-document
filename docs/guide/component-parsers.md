@@ -530,7 +530,7 @@ const App: React.FC = () => <Tabs defaultActiveKey="1" items={[
 
 Use `object` to render child components as objects:
 
-```json {11-25}
+```json {13-28}
 {
   "Tabs": {
     "props": {

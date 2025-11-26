@@ -1,11 +1,9 @@
 # Changelog
 
-## v1.0.19
-- Added: [Object Parser](/guide/component-parsers.html#object-parser), you can now render child components as an array of objects.
-
-
 ## v1.0.18
 - Added: Codify AI now supports connecting your own model API. You can configure it in the `My Team` / `AI Driver` tab on [Codify.fun](https://codify.fun). 
+- Added: [Object Parser](/guide/component-parsers.html#object-parser), you can now render child components as an array of objects.
+
 
 ## v1.0.17
 - Added: [`columnGap`](/guide/style-parsers.html#columngap) and [`rowGap`](/guide/style-parsers.html#rowgap) style parsers

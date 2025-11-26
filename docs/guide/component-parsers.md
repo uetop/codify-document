@@ -494,3 +494,72 @@ If you want to parse the icon separately, you can place the icon in a container 
 ```
 
 This does not require any setup from you.
+
+## Object Parser
+
+You can use the `object` parser to render child components as an array of objects.
+
+```jsx
+// For example, a common React component
+const App: React.FC = () => <Tabs defaultActiveKey="1" items={[
+  {
+    key: '1',
+    label: 'Tab 1',
+    children: 'Content of Tab Pane 1',
+  },
+  {
+    key: '2',
+    label: 'Tab 2',
+    children: 'Content of Tab Pane 2',
+  },
+  {
+    key: '3',
+    label: 'Tab 3',
+    children: 'Content of Tab Pane 3',
+  },
+]} />;
+
+// By default, it will be rendered as:
+<Tabs defaultActiveKey="1">
+  <Tab.Item key="1" label="Tab 1">Content of Tab Pane 1</Tab.Item>
+  <Tab.Item key="2" label="Tab 2">Content of Tab Pane 2</Tab.Item>
+  <Tab.Item key="3" label="Tab 3">Content of Tab Pane 3</Tab.Item>
+</Tabs>
+
+```
+
+Use `object` to render child components as objects:
+
+```json {11-25}
+{
+  "Tabs": {
+    "props": {
+      // When parsing properties, use the customProps option, {items} is the property name
+      // It also points to the name of the object parser for child elements
+      "customProps": "{items}"// [!code highlight]
+    },
+    "traverse": {}
+  },
+  "Tab.Item": {
+    "props": {},
+    "traverse": {},
+    "object": {
+      "name": "items",
+      "mappings": {
+        "key": "",
+        "label": {
+          "text": {
+            "nodeName": "_text"
+          }
+        },
+        "children": {
+          "text": {
+            "nodeName": "_text"
+          }
+        }
+      }
+    }
+  }
+}
+```
+

@@ -357,6 +357,7 @@ You can rename the `div` tag with auto layout, for example, to `Space`
 - unit_type: `px` | `rem` | `pt` | `mm` | `cm` | `rpx`
 - root_font_size: `number` | `string`
 - dpi: `number` | `string`
+- scaling: `number` | `string`
 
 Unit conversion. You can set conversion rules for some units, for example, converting `px` to `rem`.
 
@@ -366,6 +367,17 @@ Unit conversion. You can set conversion rules for some units, for example, conve
     "unit_type": "px", // Unit type
     "root_font_size": "14", // Root font size
     "dpi": "96" // dpi
+  }
+}
+```
+
+If you only need to scale the size and don't need to convert `px` to other units, you can make the following settings:
+
+```json
+{
+  "unit_conversion": {
+    "unit_type": "px", // Unit type
+    "scaling": 2, // scaling
   }
 }
 ```

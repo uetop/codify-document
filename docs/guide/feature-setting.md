@@ -16,6 +16,7 @@ The following is a complete example:
   "enable_token_render": true,
   "enable_export_setting_to_image": false,
   "enable_instance_realname": true,
+  "enable_aggregate_styles": true,
   "resource_path": {
     "svg": "./svg/",
     "image": "./image/"
@@ -149,6 +150,17 @@ When you enable this property, Codify will be able to identify the real name of 
 
 ```json
 "enable_instance_realname": true,
+```
+
+## enable_aggregate_styles
+
+- Type: `boolean`
+- Default: `true`
+
+When aggregate styles are enabled, all inline styles are merged into a single class. The downside is that you cannot specify a semantic class name, and it is significantly larger than an atomic class.
+
+```json
+"enable_aggregate_styles": true,
 ```
 
 ## resource_path <Badge type="warning" text="1.0.5" />
